@@ -60,6 +60,17 @@ function App() {
         >
           Upload
         </button>
+        <button
+          onClick={() =>
+            file &&
+            uploadData({
+              path: `photos/${file.name}`,
+              data: file,
+            })
+          }
+        >
+          Upload to default
+        </button>
       </div>
     </main>
   );
