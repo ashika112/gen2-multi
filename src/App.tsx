@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
-import React from 'react';
+import React from "react";
 import type { Schema } from "../amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
-import { uploadData } from 'aws-amplify/storage';
+import { uploadData } from "aws-amplify/storage";
+import { Amplify } from "aws-amplify";
 
 const client = generateClient<Schema>();
 
 function App() {
+  console.log(Amplify.getConfig());
+
   const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
   const [file, setFile] = React.useState<File>();
 
@@ -42,22 +45,22 @@ function App() {
         </a>
       </div>
       <div>
-            <input type="file" onChange={handleChange} />
-            <button
-                onClick={() =>
-                    file &&
-                    uploadData({
-                        path: `photos/${file.name}`,
-                        data: file,
-                        options: {
-                          bucket: 'mybucket1'
-                        }
-                    })
-                }
-            >
-                Upload
-            </button>
-        </div>
+        <input type="file" onChange={handleChange} />
+        <button
+          onClick={() =>
+            file &&
+            uploadData({
+              path: `photos/${file.name}`,
+              data: file,
+              options: {
+                bucket: "mybucket1",
+              },
+            })
+          }
+        >
+          Upload
+        </button>
+      </div>
     </main>
   );
 }
